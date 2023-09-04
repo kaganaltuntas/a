@@ -1,79 +1,21 @@
 import discord
+from discord.ext import commands
 
-from fikra import*
-from yazitura import*
-from parola import*
-
-# ayricaliklar (intents) değişkeni botun ayrıcalıklarını depolayacak
 intents = discord.Intents.default()
-# Mesajları okuma ayrıcalığını etkinleştirelim
 intents.message_content = True
-# client (istemci) değişkeniyle bir bot oluşturalım ve ayrıcalıkları ona aktaralım
-client = discord.Client(intents=intents)
 
-@client.event
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
+    print(f'{bot.user} olarak giriş yaptık')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith("merhaba"or"merhaba bilge"):
-        await message.channel.send("merhaba arkadaşım nasılsın")
-    elif message.content.startswith("merhaba bilge nasılsın"or"merhaba bilge naber"):
-        await message.channel.send("iyiyim teşekkürler sen")    
-    elif message.content.startswith("iyi"):
-        await message.channel.send("iyi olduğuna sevindim")
-    elif message.content.startswith("iyiyim"):
-        await message.channel.send("iyi olduğuna sevindim")
-    elif message.content.startswith("bugün nasılsın"):
-        await message.channel.send("her zamanki gibi")
-        await message.channel.send("😄")
-        await message.channel.send("süperim")
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Merhaba {bot.user}! Ben bir botum!')
 
-    elif message.content.startswith("yazı tura at"):
-        await message.channel.send(yazi_tura())
-    elif message.content.startswith("yazı tura atar mısın"):
-        await message.channel.send(yazi_tura())    
-        
-    elif message.content.startswith("bilmece sor"):
-        await message.channel.send(bilmece_sor())
-    elif message.content.startswith("iyiyim teşekkürler sen"or"iyiyim sağol sen"):
-        await message.channel.send("bende iyiyim teşekkürler")    
-    elif message.content.startswith("onu sordun"):
-        await message.channel.send("pardon arkadaşım arada bir oluyor")
-        await message.channel.send("😳")
-    elif message.content.startswith("seni affediyorum"):
-        await message.channel.send("teşekkür ederim")
-        await message.channel.send("😂")    
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
 
-    elif message.content.startswith("bilmece sorar mısın"):
-        await message.channel.send(bilmece_sor())
-    elif message.content.startswith("birdaha"):
-        await message.channel.send(bilmece_sor())
-    elif message.content.startswith("birtane daha"):
-        await message.channel.send(bilmece_sor())
-    elif message.content.startswith("şifre oluştur"or"şifre üret"or"şifre oluşturur musun"):
-        await message.channel.send(sifre_yap(10))
-    elif message.content.startswith("sağol"):
-        await message.channel.send("ne demek senin için ne yapabilirim")
-        await message.channel.send("\U0001f642")
-    elif message.content.startswith("sen"):
-        await message.channel.send("bende iyiyim teşekkürler senin için ne yapabilirim")
-        await message.channel.send("\U0001f642")
-    elif message.content.startswith("teşekkürler"or"teşekkür ederim"):
-        await message.channel.send("ne demek")
-        await message.channel.send("\U0001f642")
-    elif message.content.startswith("çok naziksin"or"süpersin"or"mükemmel"or"mükemmelsin"):
-        await message.channel.send("çok teşekkür ederim")
-        await message.channel.send("🥹")
-    elif message.content.startswith("rica ederim"or"bir şey değil"):
-        await message.channel.send("senin için ne yapabilirim")
-    elif message.content.startswith("görüşürüz"or"görüşürüz bilge"):
-        await message.channel.send("görüşürüz")
-        await message.channel.send("👋")   
-    else:
-        await message.channel.send("üzgünüm anlamadım lütfen tekrar dene")
-
-client.run("MTE0NTc5MzkzMjU4NDgyMDc3Nw.GNzqaC.LG5dfqVmeph_2FXnxRYfWnl_t3kTu96dOOeLLw")
+bot.run("GİZLİ TOKEN BURAYA")
